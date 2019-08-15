@@ -1,0 +1,224 @@
+---
+# This playbook queries the flowsearch/topn API endpoint.
+# Data available is grouped by 'dimension' and sorted by 'metric'
+# and the filters are the same as for the regular flowsearch queries.
+# Execute the playbook with -v to see all the API data returned
+
+- name: QUERY FOR TOPN PROVIDER ADDRESSES BY RECEIVED TRAFFIC
+  hosts: tetration
+
+  vars:
+    # The maximum interval that can be queried is 1 day
+    timestamp_from: "2019-08-07T00:00:00-0000"
+    timestamp_to: "2019-08-08T00:00:00-0000"
+    # The Application Scope this flowsearch applies to
+    scope_name: "mslab"
+    # The N in TopN - how many results to return
+    results: 10
+    # Group data by this field
+    dimension: "dst_address"
+    dimension_label: "Provider Address"
+    # Use this metric for ranking
+    metric: "rev_bytes"
+    metric_label: "Total Received Bytes"
+
+  tasks:
+
+    - name: Query the Tetration API
+      tetration_rest:
+        # REST API Connection
+        api_key: "{{ api_key }}"
+        api_secret: "{{ api_secret }}"
+        host: "{{ ansible_host }}"
+        # REST API Call
+        name: "flowsearch/topn"
+        method: "post"
+        payload:
+          t0: "{{ timestamp_from }}"
+          t1: "{{ timestamp_to }}"
+          scopeName: "{{ scope_name }}"
+          threshold: "{{ results }}"
+          dimension: "{{ dimension }}"
+          metric: "{{ metric }}"
+      # Execute module locally on Ansible control host
+      delegate_to: localhost
+      # Save API data for use in the report
+      register: topn
+
+    # Builds a text report from a Jinja2 template and
+    # the data returned by the API call.
+    - name: Create report
+      template:
+        src: "topn.j2"
+        dest: "output/topn-providers-traffic.txt"
+      delegate_to: localhost
+
+    # Print the contents of the file to the terminal
+    - name: Print report to terminal
+      debug:
+        msg: "{{ lookup('file', 'output/topn-providers-traffic.txt') }}"
+
+
+- name: QUERY FOR TOPN PORTS BY RECEIVED TRAFFIC
+  hosts: tetration
+
+  vars:
+    # The maximum interval that can be queried is 1 day
+    timestamp_from: "2019-08-07T00:00:00-0000"
+    timestamp_to: "2019-08-08T00:00:00-0000"
+    # The Application Scope this flowsearch applies to
+    scope_name: "mslab"
+    # The N in TopN - how many results to return
+    results: 10
+    # Group data by this field
+    dimension: "dst_port"
+    dimension_label: "Destination Port"
+    # Use this metric for ranking
+    metric: "rev_bytes"
+    metric_label: "Total Received Bytes"
+
+  tasks:
+
+    - name: Query the Tetration API
+      tetration_rest:
+        # REST API Connection
+        api_key: "{{ api_key }}"
+        api_secret: "{{ api_secret }}"
+        host: "{{ ansible_host }}"
+        # REST API Call
+        name: "flowsearch/topn"
+        method: "post"
+        payload:
+          t0: "{{ timestamp_from }}"
+          t1: "{{ timestamp_to }}"
+          scopeName: "{{ scope_name }}"
+          threshold: "{{ results }}"
+          dimension: "{{ dimension }}"
+          metric: "{{ metric }}"
+      # Execute module locally on Ansible control host
+      delegate_to: localhost
+      # Save API data for use in the report
+      register: topn
+
+    # Builds a text report from a Jinja2 template and
+    # the data returned by the API call.
+    - name: Create report
+      template:
+        src: "topn.j2"
+        dest: "output/topn-ports-traffic.txt"
+      delegate_to: localhost
+
+    # Print the contents of the file to the terminal
+    - name: Print report to terminal
+      debug:
+        msg: "{{ lookup('file', 'output/topn-ports-traffic.txt') }}"
+
+
+- name: QUERY FOR TOPN SRTT VALUES FOR FOWARDED TRAFFIC
+  hosts: tetration
+
+  vars:
+    # The maximum interval that can be queried is 1 day
+    timestamp_from: "2019-08-07T00:00:00-0000"
+    timestamp_to: "2019-08-08T00:00:00-0000"
+    # The Application Scope this flowsearch applies to
+    scope_name: "mslab"
+    # The N in TopN - how many results to return
+    results: 10
+    # Group data by this field
+    dimension: "srtt_usec"
+    dimension_label: "SRTT (Smoothed Round Trip Time)"
+    # Use this metric for ranking
+    metric: "fwd_bytes"
+    metric_label: "Total Forwarded Bytes"
+
+  tasks:
+
+    - name: Query the Tetration API
+      tetration_rest:
+        # REST API Connection
+        api_key: "{{ api_key }}"
+        api_secret: "{{ api_secret }}"
+        host: "{{ ansible_host }}"
+        # REST API Call
+        name: "flowsearch/topn"
+        method: "post"
+        payload:
+          t0: "{{ timestamp_from }}"
+          t1: "{{ timestamp_to }}"
+          scopeName: "{{ scope_name }}"
+          threshold: "{{ results }}"
+          dimension: "{{ dimension }}"
+          metric: "{{ metric }}"
+      # Execute module locally on Ansible control host
+      delegate_to: localhost
+      # Save API data for use in the report
+      register: topn
+
+    # Builds a text report from a Jinja2 template and
+    # the data returned by the API call.
+    - name: Create report
+      template:
+        src: "topn.j2"
+        dest: "output/topn-srtt-recv.txt"
+      delegate_to: localhost
+
+    # Print the contents of the file to the terminal
+    - name: Print report to terminal
+      debug:
+        msg: "{{ lookup('file', 'output/topn-srtt-recv.txt') }}"
+
+
+- name: QUERY FOR TOPN CONSUMER ADDRESS BY TCP ACK COUNT
+  hosts: tetration
+
+  vars:
+    # The maximum interval that can be queried is 1 day
+    timestamp_from: "2019-08-07T00:00:00-0000"
+    timestamp_to: "2019-08-08T00:00:00-0000"
+    # The Application Scope this flowsearch applies to
+    scope_name: "mslab"
+    # The N in TopN - how many results to return
+    results: 10
+    # Group data by this field
+    dimension: "src_address"
+    dimension_label: "Consumer Address"
+    # Use this metric for ranking
+    metric: "fwd_ack_count"
+    metric_label: "Total TCP ACK Count"
+
+  tasks:
+
+    - name: Query the Tetration API
+      tetration_rest:
+        # REST API Connection
+        api_key: "{{ api_key }}"
+        api_secret: "{{ api_secret }}"
+        host: "{{ ansible_host }}"
+        # REST API Call
+        name: "flowsearch/topn"
+        method: "post"
+        payload:
+          t0: "{{ timestamp_from }}"
+          t1: "{{ timestamp_to }}"
+          scopeName: "{{ scope_name }}"
+          threshold: "{{ results }}"
+          dimension: "{{ dimension }}"
+          metric: "{{ metric }}"
+      # Execute module locally on Ansible control host
+      delegate_to: localhost
+      # Save API data for use in the report
+      register: topn
+
+    # Builds a text report from a Jinja2 template and
+    # the data returned by the API call.
+    - name: Create report
+      template:
+        src: "topn.j2"
+        dest: "output/topn-consumer-ack.txt"
+      delegate_to: localhost
+
+    # Print the contents of the file to the terminal
+    - name: Print report to terminal
+      debug:
+        msg: "{{ lookup('file', 'output/topn-consumer-ack.txt') }}"

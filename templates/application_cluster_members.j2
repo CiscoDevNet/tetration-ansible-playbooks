@@ -1,0 +1,14 @@
+{% set COLTEMPLATE = "%-25s| %-10s| %-10s| %-35s| %-25s" %}
+{% set ROWDELIM = "%-25s+%-10s+%-10s+%-35s+%-25s"
+                | format("-" * 25,"-" * 11,"-" * 11,"-" * 36,"-" * 26) %}
+{% set THEAD = COLTEMPLATE
+                | format("Application","Version","Approved","Cluster","Members") %}
+
+{{ THEAD }}
+{{ ROWDELIM }}
+{% for app in app_clusters.results %}
+{% set clusters = app.json | json_query("[][name, version, approved, short_query.filters[].value]") %}
+{% for member in clusters %}
+{{ COLTEMPLATE | format (app.item.name, member.1, member.2, member.0, member.3) }}
+{% endfor %}
+{% endfor %}

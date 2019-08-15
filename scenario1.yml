@@ -1,0 +1,108 @@
+---
+# This playbook queries the applications, scopes and
+# inventory search API endpoints.
+# Execute the playbook with -v to see all the API data returned
+
+- name: QUERY APPLICATION SCOPES
+  hosts: tetration
+
+  tasks:
+
+    # Find each application scope and its filter criteria
+    - name: Query the Tetration API
+      tetration_rest:
+        # REST API Connection
+        api_key: "{{ api_key }}"
+        api_secret: "{{ api_secret }}"
+        host: "{{ ansible_host }}"
+        # REST API Call
+        name: "app_scopes"
+        method: "get"
+      delegate_to: localhost
+      register: app_scopes
+
+    # Builds a text report from a Jinja2 template and
+    # the data returned by the API call.
+    - name: Create report
+      template:
+        src: "app_scope.j2"
+        dest: "output/app_scopes.txt"
+      delegate_to: localhost
+
+    # Print the contents of the file to the terminal
+    - name: Print report to terminal
+      debug:
+        msg: "{{ lookup('file', 'output/app_scopes.txt') }}"
+
+
+- name: QUERY SCOPE MEMBERS
+  hosts: tetration
+
+  tasks:
+
+    # Find the members of an application scope
+    - name: Query for a specific Scope's Members
+      tetration_rest:
+        # REST API Connection
+        api_key: "{{ api_key }}"
+        api_secret: "{{ api_secret }}"
+        host: "{{ ansible_host }}"
+        # REST API Call
+        name: "inventory/search"
+        method: "post"
+        payload:
+          scopeName: "mslab"
+          filter:
+            type: "and"
+            filters:
+              - type: "contains"
+                field: "user_Application-Name"
+                value: "SharePoint"
+
+      delegate_to: localhost
+      register: scope_members
+
+    # Builds a text report from a Jinja2 template and
+    # the data returned by the API call.
+    - name: Create report
+      template:
+        src: "scope_members.j2"
+        dest: "output/scope_members.txt"
+      delegate_to: localhost
+
+    # Print the contents of the file to the terminal
+    - name: Print report to terminal
+      debug:
+        msg: "{{ lookup('file', 'output/scope_members.txt') }}"
+
+
+- name: QUERY APPLICATIONS (ADM)
+  hosts: tetration
+  tags: dev
+
+  tasks:
+
+    - name: Query for all Applications
+      tetration_rest:
+        # REST API Connection
+        api_key: "{{ api_key }}"
+        api_secret: "{{ api_secret }}"
+        host: "{{ ansible_host }}"
+        # REST API Call
+        name: "applications"
+        method: "get"
+      delegate_to: localhost
+      register: applications
+
+    # Builds a text report from a Jinja2 template and
+    # the data returned by the API call.
+    - name: Create report
+      template:
+        src: "applications.j2"
+        dest: "output/applications.txt"
+      delegate_to: localhost
+
+    # Print the contents of the file to the terminal
+    - name: Print report to terminal
+      debug:
+        msg: "{{ lookup('file', 'output/applications.txt') }}"

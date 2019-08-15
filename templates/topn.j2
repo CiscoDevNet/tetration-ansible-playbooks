@@ -1,0 +1,12 @@
+{% set COLTEMPLATE  = "%-40s| %-40s" %}
+{% set ROWDELIM     = "%-40s+%-40s"
+                | format("-"*40,"-"*41) %}
+{% set THEAD = COLTEMPLATE
+                | format(dimension_label, metric_label) %}
+
+{{ THEAD }}
+{{ ROWDELIM }}
+{% for t in topn.json.0.result %}
+{{ COLTEMPLATE | format (t[dimension], t[metric]) }}
+{{ ROWDELIM }}
+{% endfor %}

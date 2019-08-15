@@ -1,0 +1,8 @@
+
+Hostname            | Address             | OS                  
+--------------------+---------------------+---------------------
+SPApp01             | 10.107.0.62         | MSServer2012R2Datacenter
+SPDC01              | 10.107.0.63         | MSServer2012R2Datacenter
+SPSearch01          | 10.107.0.64         | MSServer2012R2Datacenter
+SQL02               | 10.107.0.22         | MSServer2012R2Datacenter
+SPFE01              | 10.107.0.61         | MSServer2012R2Datacenter

@@ -1,0 +1,14 @@
+{% set COLTEMPLATE = "%-40s| %-40s" %}
+{% set ROWDELIM = "%-40s+%-40s"
+                | format("-" * 40,"-" * 41) %}
+{% set THEAD = COLTEMPLATE
+                | format("Name","Query") %}
+
+{{ THEAD }}
+{{ ROWDELIM }}
+{% for item in app_scopes.json %}
+{{ COLTEMPLATE | format (item.name,
+                         "%s %s %s" | format(item.short_query.field,
+                                             item.short_query.type,
+                                             item.short_query.value)) }}
+{% endfor %}

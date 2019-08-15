@@ -1,0 +1,68 @@
+---
+# This playbook queries the flowsearch API endpoint.
+# The usecase presented here is that of looking for
+# latency metrics for connections between servers
+# with App or Search in their name destined to the SQL02
+# server only.
+# Execute the playbook with -v to see all the API data returned
+
+- name: INVESTIGATE SERVER FLOWS
+  hosts: tetration
+
+  vars:
+    # The maximum interval that can be queried is 1 day
+    timestamp_from: "2019-08-07T00:00:00-0000"
+    timestamp_to: "2019-08-07T00:10:00-0000"
+    # The Application Scope this flowsearch applies to
+    scope_name: "mslab"
+    # Limit the amount of results returned
+    results: 100
+    # These tie in closely with the configured filters
+    # in the payload below
+    destination_server_name: "SQL02"
+    source_server_name: "App|Search"
+
+  tasks:
+
+    - name: Query the Tetration API
+      tetration_rest:
+        # REST API Connection
+        api_key: "{{ api_key }}"
+        api_secret: "{{ api_secret }}"
+        host: "{{ ansible_host }}"
+        # REST API Call
+        name: "flowsearch"
+        method: "post"
+        payload:
+          t0: "{{ timestamp_from }}"
+          t1: "{{ timestamp_to }}"
+          scopeName: "{{ scope_name }}"
+          limit: "{{ results }}"
+          filter:
+            type: "and"
+            filters:
+              # We're looking for the exact destination here
+              - type: "eq"
+                field: "dst_hostname"
+                value: "{{ destination_server_name }}"
+              # But for sources we're matching a simple RegEx
+              - type: "regex"
+                field: "src_hostname"
+                value: "{{ source_server_name }}"
+      # Execute module locally on Ansible control host
+      delegate_to: localhost
+      # Save API data for use in the report
+      register: server_flows
+
+    # Builds a text report from a Jinja2 template and
+    # the data returned by the API call.
+    - name: Create report
+      template:
+        src: "server_flows.j2"
+        dest: "output/server_flows.txt"
+      delegate_to: localhost
+
+    # Print the contents of the file to the terminal
+    - name: Print report to terminal
+      debug:
+        msg: "{{ lookup('file', 'output/server_flows.txt') }}"

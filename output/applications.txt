@@ -1,0 +1,8 @@
+
+Primary   | Author         | Name                     | Scope                    
+----------+----------------+--------------------------+--------------------------
+True      | Vivek Dalvi    | Developer Workstations   | mslab:DeveloperWorkstations
+True      | Vivek Dalvi    | SharePoint               | mslab:SharePoint         
+True      | Vivek Dalvi    | Domain Controllers       | mslab:DomainControllers  
+True      | Vivek Dalvi    | AppDev Servers           | mslab:AppDev-Servers     
+True      | Vivek Dalvi    | Reporting                | mslab:Reporting          

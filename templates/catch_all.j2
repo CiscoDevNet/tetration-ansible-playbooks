@@ -1,0 +1,11 @@
+{% set COLTEMPLATE = "%-40s| %-20s" %}
+{% set ROWDELIM = "%-40s+%-20s"
+                | format("-" * 40,"-" * 21) %}
+{% set THEAD = COLTEMPLATE
+                | format("Application","CATCH-ALL ACTION") %}
+
+{{ THEAD }}
+{{ ROWDELIM }}
+{% for app in catch_all.results %}
+{{ COLTEMPLATE | format (app.item.name, app.json.action) }}
+{% endfor %}

@@ -1,0 +1,8 @@
+
+Application                             | CATCH-ALL ACTION    
+----------------------------------------+---------------------
+Developer Workstations                  | DENY                
+SharePoint                              | DENY                
+Domain Controllers                      | DENY                
+AppDev Servers                          | DENY                
+Reporting                               | DENY                

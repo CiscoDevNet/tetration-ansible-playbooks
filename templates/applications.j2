@@ -1,0 +1,12 @@
+{% set COLTEMPLATE = "%-10s| %-15s| %-25s| %-25s" %}
+{% set ROWDELIM = "%-10s+%-15s+%-25s+%-25s"
+                | format("-" * 10,"-" * 16,"-" * 26, "-" * 26) %}
+{% set THEAD = COLTEMPLATE
+                | format("Primary","Author","Name", "Scope") %}
+
+{{ THEAD }}
+{{ ROWDELIM }}
+{% for item in applications.json %}
+{% set scope_name = app_scopes.json | json_query("[?id=='"+ item.app_scope_id + "'].name") %}
+{{ COLTEMPLATE | format (item.primary, item.author, item.name, scope_name.0) }}
+{% endfor %}

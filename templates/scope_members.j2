@@ -1,0 +1,11 @@
+{% set COLTEMPLATE = "%-20s| %-20s| %-20s" %}
+{% set ROWDELIM = "%-20s+%-20s+%-20s"
+                | format("-" * 20,"-" * 21,"-" * 21) %}
+{% set THEAD = COLTEMPLATE
+                | format("Hostname","Address","OS") %}
+
+{{ THEAD }}
+{{ ROWDELIM }}
+{% for item in scope_members.json.results %}
+{{ COLTEMPLATE | format (item.host_name, item.ip, item.os) }}
+{% endfor %}

@@ -1,0 +1,10 @@
+
+Name                                    | Query                                   
+----------------------------------------+-----------------------------------------
+mslab:SharePoint                        | user_Application-Name contains SharePoint
+mslab:DeveloperWorkstations             | user_Role contains Work                 
+mslab:AppDev-Servers                    | user_Role contains App-Dev              
+mslab:DomainControllers                 | user_Role contains Domain               
+mslab:TetrationMS                       | ip subnet 198.19.193.224/27             
+mslab:Reporting                         | user_Application-Name contains Reporting
+mslab                                   | vrf_id eq 6000                          

@@ -1,0 +1,125 @@
+---
+# This playbook queries the applications API endpoint.
+# Application information, server clusters, scopes and
+# policies are all reported on.
+# Execute the playbook with -v to see all the API data returned
+
+- name: QUERY APPLICATION CLUSTERS
+  hosts: tetration
+
+  tasks:
+
+    # This query gives us application metadata that will
+    # be used in subsequent plays as well.
+    - name: Query for all Applications
+      tetration_rest:
+        # REST API Connection
+        api_key: "{{ api_key }}"
+        api_secret: "{{ api_secret }}"
+        host: "{{ ansible_host }}"
+        # REST API Call
+        name: "applications"
+        method: "get"
+      delegate_to: localhost
+      register: applications
+
+    # For each application, query for its server cluster(s)
+    - name: Query for all Clusters within each Application
+      tetration_rest:
+        # REST API Connection
+        api_key: "{{ api_key }}"
+        api_secret: "{{ api_secret }}"
+        host: "{{ ansible_host }}"
+        # REST API Call
+        name: "applications/{{ item.id }}/clusters"
+        method: "get"
+      delegate_to: localhost
+      register: app_clusters
+      loop: "{{ applications.json }}"
+      loop_control:
+        label: "{{item.name}}: {{item.id}}"
+
+    # Builds a text report from a Jinja2 template and
+    # the data returned by the API call.
+    - name: Create report
+      template:
+        src: "application_cluster_members.j2"
+        dest: "output/application_cluster_members.txt"
+      delegate_to: localhost
+
+    # Print the contents of the file to the terminal
+    - name: Print report to terminal
+      debug:
+        msg: "{{ lookup('file', 'output/application_cluster_members.txt') }}"
+
+# There are three policy types: Absolute, Default and Catch-all
+# We report the Catch-all policy for all applications in one table,
+# then query for the Absolute and Default policies on a specific
+# application (there can be many of them so filtering is necessary).
+- name: QUERY APPLICATION POLICIES
+  hosts: tetration
+
+  vars:
+    # This info, especially the id, can be extracted from the
+    # first query we did at the start of the playbook.
+    application_name: "Domain Controllers"
+    application_id: "5adff767755f026a0b093f32"
+
+  tasks:
+
+    # Loop over all applications and query the API for each
+    # one's Catch-all policy
+    - name: Query for an application's Catch-all
+      tetration_rest:
+        # REST API Connection
+        api_key: "{{ api_key }}"
+        api_secret: "{{ api_secret }}"
+        host: "{{ ansible_host }}"
+        # REST API Call
+        name: "applications/{{ item.id }}/catch_all"
+        method: "get"
+      delegate_to: localhost
+      register: catch_all
+      loop: "{{ applications.json }}"
+      loop_control:
+        label: "{{item.name}}: {{item.id}}"
+
+    # Builds a text report from a Jinja2 template and
+    # the data returned by the API call.
+    - name: Create report
+      template:
+        src: "catch_all.j2"
+        dest: "output/catch_all.txt"
+      delegate_to: localhost
+
+    # Print the contents of the file to the terminal
+    - name: Print report to terminal
+      debug:
+        msg: "{{ lookup('file', 'output/catch_all.txt') }}"
+
+
+    # This query returns all three policy categories
+    - name: Query for an application's policies
+      tetration_rest:
+        # REST API Connection
+        api_key: "{{ api_key }}"
+        api_secret: "{{ api_secret }}"
+        host: "{{ ansible_host }}"
+        # REST API Call
+        name: "applications/{{ application_id }}/policies"
+        method: "get"
+      delegate_to: localhost
+      register: application_policies
+
+    # Builds a text report from a Jinja2 template and
+    # the data returned by the API call.
+    - name: Create report
+      template:
+        src: "application_policies.j2"
+        dest: "output/application_policies.txt"
+      delegate_to: localhost
+
+    # Print the contents of the file to the terminal
+    - name: Print report to terminal
+      debug:
+        msg: "{{ lookup('file', 'output/application_policies.txt') }}"

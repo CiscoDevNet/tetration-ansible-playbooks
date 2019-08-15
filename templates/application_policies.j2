@@ -1,0 +1,40 @@
+{% set COLTEMPLATE = "%-10s| %-10s| %-35s| %-35s| %-25s" %}
+{% set ROWDELIM = "%-10s+%-10s+%-35s+%-35s+%-25s"
+                | format("-" * 10,"-" * 11,"-" * 36,"-" * 36,"-" * 26) %}
+{% set THEAD = COLTEMPLATE
+                | format("Priority","Action","Consumer","Provider","Services") %}
+{% set PROTOMAP = {6:'TCP', 17:'UDP', 1:'ICMP', } %}
+
+APPLICATION: {{ application_name }}
+
+ABSOLUTE POLICIES:
+
+{{ THEAD }}
+{{ ROWDELIM }}
+{% for pol in application_policies.json.absolute_policies %}
+{{ COLTEMPLATE | format (pol.priority, pol.action, pol.consumer_filter.name, pol.provider_filter.name, "") }}
+{% for s in pol.l4_params %}
+{% if s.proto == 1 %}{% set service = "ICMP" %}
+{% elif s.port.0 == s.port.1 %}{% set service = "%s(%d)" | format(PROTOMAP[s.proto], s.port.0) %}
+{% else %}{% set service = "%s(%d)" | format(PROTOMAP[s.proto], s.port.0) %}
+{% endif %}
+{{ COLTEMPLATE | format ("","","","", service) }}
+{% endfor %}
+{{ ROWDELIM }}
+{% endfor %}
+
+DEFAULT POLICIES:
+
+{{ THEAD }}
+{{ ROWDELIM }}
+{% for pol in application_policies.json.default_policies %}
+{{ COLTEMPLATE | format (pol.priority, pol.action, pol.consumer_filter.name, pol.provider_filter.name, "") }}
+{% for s in pol.l4_params %}
+{% if s.proto == 1 %}{% set service = "ICMP" %}
+{% elif s.port.0 == s.port.1 %}{% set service = "%s(%d)" | format(PROTOMAP[s.proto], s.port.0) %}
+{% else %}{% set service = "%s(%d)" | format(PROTOMAP[s.proto], s.port.0) %}
+{% endif %}
+{{ COLTEMPLATE | format ("","","","", service) }}
+{% endfor %}
+{{ ROWDELIM }}
+{% endfor %}

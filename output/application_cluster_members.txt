@@ -1,0 +1,13 @@
+
+Application              | Version   | Approved  | Cluster                            | Members                  
+-------------------------+-----------+-----------+------------------------------------+--------------------------
+Developer Workstations   | v2        | False     | DeveloperWorkstations              | ['10.107.0.92', '10.107.0.91']
+SharePoint               | v3        | True      | SharePoint-SearchTier              | ['10.107.0.64']          
+SharePoint               | v3        | True      | SharePoint-ApplicationTier         | ['10.107.0.62']          
+SharePoint               | v3        | True      | SharePoint-DatabaseTier            | ['10.107.0.22']          
+SharePoint               | v3        | True      | SharePoint-DistributedCacheTier    | ['10.107.0.63']          
+SharePoint               | v3        | True      | SharePoint-FrontEndTier            | ['10.107.0.61']          
+Domain Controllers       | v3        | True      | DomainControllers                  | ['10.107.0.11', '10.107.0.12']
+AppDev Servers           | v3        | True      | ApplicationDevelopmentServers      | ['10.107.0.32', '10.107.0.31']
+Reporting                | v4        | True      | Reporting-DatabaseTier             | ['10.107.0.21']          
+Reporting                | v4        | True      | Reporting-Web/AppTier              | ['10.107.0.41', '10.107.0.52', '10.107.0.50', '10.107.0.42', '10.107.0.51']

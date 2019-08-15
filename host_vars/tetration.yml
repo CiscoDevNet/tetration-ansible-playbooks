@@ -1,0 +1,8 @@
+---
+# IP or hostname for the Tetration Dashboard
+ansible_host: "https://tetration.svpod.dc-01.com"
+# API Details - Create new token from Tetration Dashboard!
+api_key: ""
+api_secret: ""
+# Set to true for production setups that use trusted certificates!
+# validate_certs: false
