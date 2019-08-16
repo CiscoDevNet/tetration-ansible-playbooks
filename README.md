@@ -14,7 +14,7 @@ Theses Ansible playbook were created using Cisco dCloud [Cisco Tetration Platfor
 
 - Scenario 2 - This playbook queries the applications API endpoint. Application information, server clusters, scopes and policies are all reported on. Execute the playbook with -v to view all the API returned data.
 
-- Scenario 3 - This playbook queries the flowsearch API endpoint. The usecase presented here is that of looking for latency metrics for connections between servers with App or Search in their name destined to the SQL02 server only. Execute the playbook with -v to view all the API returned data.
+- Scenario 3 - This playbook queries the flowsearch API endpoint. The use case presented here is that of looking for latency metrics for connections between servers with App or Search in their name destined to the SQL02 server only. Execute the playbook with -v to view all the API returned data.
 
 - Scenario 5 - This playbook queries the flowsearch/topn API endpoint. Data available is grouped by 'dimension' and sorted by 'metric' and the filters are the same as for the regular flowsearch queries. Execute the playbook with -v to view all the API returned data.
 
@@ -23,19 +23,19 @@ Theses Ansible playbook were created using Cisco dCloud [Cisco Tetration Platfor
 
 - Ansible 2.8.x
 - Python 3.7.x
-- [tetpyclient](https://pypi.org/project/tetpyclient/) 
+- [tetpyclient](https://pypi.org/project/tetpyclient/)
 
 
 ## Configuration / Getting Started
 
-- Review the `vars` and `hosts` files update to refelect your Tetration deployment if not accessing the dCloud environment.
+- Review the `vars` and `hosts` files update to reflect your Tetration deployment if not accessing the dCloud environment.
 
 - Review the `output` directory for sample output from the Jinja2 templates
 
-## Using dcloud's instant access lab
+## Using dCloud's instant access lab
 
 The dCloud instant access browser session is authenticated and sets cookies which are required
-when making any calls to the Tetration dashboard (something in the path intercepts all connections). If those dcloud cookies are not in the requests the calls are redirected to a login page for dcloud.
+when making any calls to the Tetration dashboard (something in the path intercepts all connections). If those dcloud cookies are not in the requests the calls are redirected to a login page for dCloud.
 
 To fix for development: in the `tetpyclient.py` file from the
 `tetpyclient` package installed by pip, edit the `signed_http_request` function
