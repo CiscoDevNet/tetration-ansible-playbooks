@@ -6,7 +6,7 @@ These Ansible playbooks and supporting files enable the querying and display of 
 
 ## Resources
 
-Theses Ansible playbook were created using Cisco dCloud [Cisco Tetration Platform 3.1 v1](https://dcloud2-rtp.cisco.com/#) instant-access environment.  The playbooks map directly to scenarios outlined in the [documentation](https://dcloud2-rtp.cisco.com/#).
+Theses Ansible playbook were created using Cisco dCloud [Cisco Tetration Platform 3.1 v1](https://dcloud-cms.cisco.com/demo_news/cisco-tetration-platform-3-1-v1) instant-access environment.  The playbooks map directly to scenarios outlined in the [documentation](https://dcloud-cms.cisco.com/demo_news/cisco-tetration-platform-3-1-v1).
 
 ## Scenarios
 
@@ -28,7 +28,7 @@ Theses Ansible playbook were created using Cisco dCloud [Cisco Tetration Platfor
 
 ## Configuration / Getting Started
 
-- Review the `vars` and `hosts` files update to reflect your Tetration deployment if not accessing the dCloud environment.
+- Review the `vars` and `hosts` files. Update to reflect your Tetration deployment if not accessing the dCloud environment.
 
 - Review the `output` directory for sample output from the Jinja2 templates
 
