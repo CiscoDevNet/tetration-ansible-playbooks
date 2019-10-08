@@ -1,3 +1,5 @@
+[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/CiscoDevNet/tetration-ansible-playbooks)
+
 # Ansible Cisco Tetration Playbooks
 
 Cisco Tetration offers holistic workload protection for multi-cloud data centers by enabling a zero-trust model using segmentation. This approach allows the identification of security incidents faster, contains lateral movement, and reduces the  attack surface. Tetration's infrastructure-agnostic approach supports both on-premises and public cloud workloads.
@@ -6,7 +8,7 @@ These Ansible playbooks and supporting files enable the querying and display of 
 
 ## Resources
 
-Theses Ansible playbook were created using Cisco dCloud [Cisco Tetration Platform 3.1 v1](https://dcloud-cms.cisco.com/demo_news/cisco-tetration-platform-3-1-v1) instant-access environment.  The playbooks map directly to scenarios outlined in the [documentation](https://dcloud-cms.cisco.com/demo_news/cisco-tetration-platform-3-1-v1).
+These Ansible playbooks were created using Cisco dCloud [Cisco Tetration Platform 3.1 v1](https://dcloud-cms.cisco.com/demo_news/cisco-tetration-platform-3-1-v1) instant-access environment.  The playbooks map directly to scenarios outlined in the [documentation](https://dcloud-cms.cisco.com/demo_news/cisco-tetration-platform-3-1-v1).
 
 ## Scenarios
 
