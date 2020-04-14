@@ -7,8 +7,12 @@ Cisco Tetration offers holistic workload protection for multi-cloud data centers
 These Ansible playbooks and supporting files enable the querying and display of various aspects of Cisco Tetration.
 
 ## Resources
+The original Cisco dCloud Tetration environment that these playbooks were created for **has been updated**.
 
-These Ansible playbooks were created using Cisco dCloud [Cisco Tetration Platform 3.1 v1](https://dcloud-cms.cisco.com/demo_news/cisco-tetration-platform-3-1-v1) instant-access environment.  The playbooks map directly to scenarios outlined in the [documentation](https://dcloud-cms.cisco.com/demo_news/cisco-tetration-platform-3-1-v1).
+It is very likely that the playbooks and supporting files in this repository are functional with the **updated environment**. dCloud 
+[Cisco Tetration Platform 3.3 v1 - Instant Demo](https://dcloud2-rtp.cisco.com/content/instantdemo/cisco-tetration-platform-3-3-v1?returnPathTitleKey=content-view). The playbooks map directly to scenarios outlined in the [documentation](https://dcloud2-rtp.cisco.com/content/instantdemo/cisco-tetration-platform-3-3-v1?returnPathTitleKey=content-view).
+
+> These Ansible playbooks were **originally** created using Cisco dCloud Cisco Tetration Platform 3.1 v1 instant-access environment. This environment no longer exists.
 
 ## Scenarios
 
