@@ -2,7 +2,7 @@
 
 # Ansible Cisco Tetration Playbooks
 
-Cisco Tetration offers holistic workload protection for multi-cloud data centers by enabling a zero-trust model using segmentation. This approach allows the identification of security incidents faster, contains lateral movement, and reduces the  attack surface. Tetration's infrastructure-agnostic approach supports both on-premises and public cloud workloads.
+Cisco Tetration offers holistic workload protection for multi-cloud data centers by enabling a zero-trust model using segmentation. This approach allows the identification of security incidents faster, contains lateral movement, and reduces the  attack surface. Tetration's infrastructure-agnostic approach supports both on-premises and public cloud workloads. Tetration is part of Cisco's App-First Security solution offering.
 
 These Ansible playbooks and supporting files enable the querying and display of various aspects of Cisco Tetration.
 
